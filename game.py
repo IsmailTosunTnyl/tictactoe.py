@@ -15,12 +15,17 @@ class game():
         self.board = np.full((3, 3), "-")
 
     def play(self, row, column):
-        print("win ", self.checkForWin())
 
         if self.isAnySpaceInBoard():
 
             if self.isAvailable(row, column):
                 self.board[row][column] = self.player
+
+                if self.checkForWin():
+                    self.printTheBoard()
+                    print(self.player, " Win the game !!")
+                    return False
+
                 if self.player == x:
                     self.player = o
                 else:
@@ -31,33 +36,36 @@ class game():
         else:
             # game ended in drawn
             print("Drawn")
+
         self.printTheBoard()
+        return True
 
     def isAvailable(self, row, column):
         return self.board[row][column] == "-"
 
     def printTheBoard(self):
-        print("\n****************\n\n", self.board)
+        print("\n\n****Tic Tac Toe*****")
+        print(self.board)
 
     def isAnySpaceInBoard(self):
         return "-" in self.board
 
     def checkForWinHorizontal(self):
-        win = False
+        # checking win conditioun for row
         for row in self.board:
-            if win:
-                return win
-
             a = row[0]
-            if a == "-":
-                continue
-            for i in row:
-                if not (a == i):
-                    win = False
-                    break
+            counter = 0
+
+            for i in range(len(row)):
+                if a == row[i] and a != "-":
+                    counter = 1 + counter
                 else:
-                    win = True
-        return win
+                    a = row[i]
+                    counter = 0
+                if counter == self.winConunter:
+                    return True
+
+        return False
 
     def checkForWinVertical(self):
         # checking win condition for column
@@ -68,22 +76,47 @@ class game():
                 if a == self.board[column][i] and a != "-":
                     counter = counter + 1
                 else:
+                    a = self.board[column][i]
                     counter = 0
+
+                if counter == self.winConunter:
+                    return True
+
+        return False
+
+    def checkForWinDiagonal(self):
+        # first part of diagonal
+
+        a = self.board[0][0]
+        counter = 0
+        for i in range(len(self.board)):
+
+            if a == self.board[i][i] and a != "-":
+                counter = counter + 1
+            else:
+                a = self.board[i][i]
+                counter = 0
+            if counter == self.winConunter:
+                return True
+
+        # second part of diagonal
+        a = self.board[0][len(self.board[0]) - 1]
+        counter = 0
+
+        for i in reversed(range(len(self.board))):
+
+            if a == self.board[i][i] and a != "-":
+                counter = counter + 1
+            else:
+                a = self.board[i][i]
+                counter = 0
             if counter == self.winConunter:
                 return True
 
         return False
 
     def checkForWin(self):
-        return self.checkForWinHorizontal()
+        return self.checkForWinHorizontal() or self.checkForWinVertical() or self.checkForWinDiagonal()
 
 
-g = game()
-print(g.checkForWinVertical())
-g.play(0, 0)
-g.play(0, 1)
-g.play(1, 0)
-g.play(1, 1)
-g.play(2, 0)
-print("---------------")
-print(g.checkForWinVertical())
+
