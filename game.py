@@ -11,6 +11,7 @@ class game():
         self.winConunter = 3
         print(self.board)
 
+
     def clearTheBoard(self):
         self.board = np.full((3, 3), "-")
 
@@ -24,11 +25,9 @@ class game():
                 if self.checkForWin():
                     self.printTheBoard()
                     print(self.player, " Win the game !!")
-                    if self.player == x:
-                        self.player = o
-                    else:
-                        self.player = x
-                    return False
+
+                    return "win"
+
                 else:
                     print("Player Changed")
                     if self.player == x:
@@ -40,10 +39,12 @@ class game():
                 print("Please choose an empty place")
         else:
             # game ended in drawn
+
             print("Drawn")
+            return "draw"
 
         self.printTheBoard()
-        return True
+
 
     def isAvailable(self, row, column):
         return self.board[row][column] == "-"

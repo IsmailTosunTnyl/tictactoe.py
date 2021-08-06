@@ -1,5 +1,8 @@
-
-
+import game
+def start():
+    g = game.game()
+    gui = GUI(g)
+    gui.startGUI()
 
 class GUI:
     import pygame, sys
@@ -18,6 +21,7 @@ class GUI:
         self.pygame.display.set_caption("TIC TAC TOE")
         self.screen.fill(self.background_color)
         self.g = game
+        self.gameStatus = True
 
 
     def drawLines(self):
@@ -41,6 +45,30 @@ class GUI:
         else:
              self.pygame.draw.circle(self.screen, "#FFFFFF", (y * 200 + 100, x * 200 + 100), 80, 6)
 
+    def endGame(self,content):
+        self.gameStatus = False
+        print("endGame")
+        self.pygame.init()
+        self.screen = self.pygame.display.set_mode((600, 200))
+        color = "#FFFFFF"
+        self.screen.fill(color)
+        font = self.pygame.font.Font('freesansbold.ttf', 32)
+
+        # create a text surface object,
+        # on which text is drawn on it.
+
+        text = font.render(content, True, self.background_color)
+
+        # create a rectangular object for the
+        # text surface object
+        textRect = text.get_rect()
+
+        # set the center of the rectangular object.
+        textRect.center = (600 // 2, 200 // 2)
+        self.screen.blit(text, textRect)
+        self.pygame.display.update()
+
+
     def startGUI(self):
         self.drawLines()
         while True:
@@ -52,7 +80,22 @@ class GUI:
                 if event.type == self.pygame.MOUSEBUTTONDOWN:
                     mouseX = event.pos[0]
                     mouseY = event.pos[1]
+                    if self.gameStatus:
+                        status = self.g.play(int(mouseY / 200), int(mouseX / 200))
+                        if status == "win":
+                            self.drawFigures(int(mouseY / 200), int(mouseX / 200))
+                            print("Win")
+                            self.endGame(f'{self.g.player} Win')
 
-                    self.g.play(int(mouseY / 200), int(mouseX / 200))
-                    self.drawFigures(int(mouseY / 200), int(mouseX / 200))
+                        elif status == "draw":
+                            self.drawFigures(int(mouseY / 200), int(mouseX / 200))
+                            self.endGame(f'{self.g.player} Draw')
+                            print("Draw")
+
+                        else:
+                            self.drawFigures(int(mouseY / 200), int(mouseX / 200))
+                    else:
+                        self.pygame.quit()
+                        start()
+
             self.pygame.display.update()

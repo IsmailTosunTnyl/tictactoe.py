@@ -1,12 +1,14 @@
-import game , GUI
-g = game.game()
-def gameInput():
-    rawinput = input(f"{g.player} enter your cordinat like '0 0' ")
-    return [int(rawinput[0]),int(rawinput[2])]
+import game, GUI
 
 
-gui = GUI.GUI(g)
-gui.startGUI()
+
+
+def start():
+    g = game.game()
+    gui = GUI.GUI(g)
+    gui.startGUI()
+
+start()
 
 
 
