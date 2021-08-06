@@ -24,12 +24,17 @@ class game():
                 if self.checkForWin():
                     self.printTheBoard()
                     print(self.player, " Win the game !!")
+                    if self.player == x:
+                        self.player = o
+                    else:
+                        self.player = x
                     return False
-
-                if self.player == x:
-                    self.player = o
                 else:
-                    self.player = x
+                    print("Player Changed")
+                    if self.player == x:
+                        self.player = o
+                    else:
+                        self.player = x
             else:
                 # wrong place print a warning for user
                 print("Please choose an empty place")
@@ -117,6 +122,9 @@ class game():
 
     def checkForWin(self):
         return self.checkForWinHorizontal() or self.checkForWinVertical() or self.checkForWinDiagonal()
+
+    def player(self):
+        return self.player
 
 
 
