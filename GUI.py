@@ -1,8 +1,4 @@
 import game
-def start():
-    g = game.game()
-    gui = GUI(g)
-    gui.startGUI()
 
 class GUI:
     import pygame, sys
@@ -89,13 +85,25 @@ class GUI:
 
                         elif status == "draw":
                             self.drawFigures(int(mouseY / 200), int(mouseX / 200))
-                            self.endGame(f'{self.g.player} Draw')
+                            self.endGame(' Draw')
                             print("Draw")
 
                         else:
                             self.drawFigures(int(mouseY / 200), int(mouseX / 200))
                     else:
-                        self.pygame.quit()
-                        start()
+                        self.pygame.init()
+                        self.WIDTH = 600
+                        self.HEIGHT = 600
+                        self.background_color = "#27aae1"
+                        self.icon = self.pygame.image.load("icon.png")
+
+                        self.screen = self.pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+                        self.pygame.display.set_icon(self.icon)
+                        self.pygame.display.set_caption("TIC TAC TOE")
+                        self.screen.fill(self.background_color)
+                        self.gameStatus = True
+                        self.drawLines()
+                        self.g.restart()
+
 
             self.pygame.display.update()

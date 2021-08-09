@@ -127,5 +127,9 @@ class game():
     def player(self):
         return self.player
 
+    def restart(self):
+        self.board = np.full((3, 3), "-")
+        self.player = x
+        print(self.board)
 
 
