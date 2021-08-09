@@ -108,17 +108,17 @@ class game():
         # second part of diagonal
         a = self.board[0][len(self.board[0]) - 1]
         counter = 0
-
+        j = 0
         for i in reversed(range(len(self.board))):
 
-            if a == self.board[i][i] and a != "-":
+            if a == self.board[j][i] and a != "-":
                 counter = counter + 1
             else:
-                a = self.board[i][i]
+                a = self.board[j][i]
                 counter = 0
             if counter == self.winConunter:
                 return True
-
+            j = j+1
         return False
 
     def checkForWin(self):

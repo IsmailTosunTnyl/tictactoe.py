@@ -2,13 +2,15 @@ import game, GUI
 
 
 
+try:
 
-def start():
-    g = game.game()
-    gui = GUI.GUI(g)
-    gui.startGUI()
+        g = game.game()
+        gui = GUI.GUI(g)
+        gui.startGUI()
 
-start()
+finally:
+    print("run")
+
 
 
 

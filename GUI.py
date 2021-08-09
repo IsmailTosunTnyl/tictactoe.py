@@ -18,6 +18,7 @@ class GUI:
         self.screen.fill(self.background_color)
         self.g = game
         self.gameStatus = True
+        self.font = self.pygame.font.Font('orange juice 2.0.ttf', 40)
 
 
     def drawLines(self):
@@ -48,12 +49,12 @@ class GUI:
         self.screen = self.pygame.display.set_mode((600, 200))
         color = "#FFFFFF"
         self.screen.fill(color)
-        font = self.pygame.font.Font('freesansbold.ttf', 32)
+
 
         # create a text surface object,
         # on which text is drawn on it.
 
-        text = font.render(content, True, self.background_color)
+        text = self.font.render(content, True, self.background_color)
 
         # create a rectangular object for the
         # text surface object
@@ -91,7 +92,7 @@ class GUI:
                         else:
                             self.drawFigures(int(mouseY / 200), int(mouseX / 200))
                     else:
-                        self.pygame.init()
+
                         self.WIDTH = 600
                         self.HEIGHT = 600
                         self.background_color = "#27aae1"
